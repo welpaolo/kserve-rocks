@@ -158,6 +158,16 @@ parts:
         "flashinfer-jit-cache==0.6.6"
       uv cache clean
 
+      # NIXL (NVIDIA Inference Xfer Library) - required for disaggregated
+      # prefill / KV transfer. Ships prebuilt CUDA 12/13 backends from PyPI,
+      # matching the bare `nixl` install in
+      # https://github.com/llm-d/llm-d/blob/v0.4.0/docker/scripts/cuda/runtime/install-vllm.sh
+      uv pip install --no-cache -v \
+        --index-strategy unsafe-best-match \
+        --extra-index-url "${FLASHINFER_INDEX_URL}" \
+        nixl
+      uv cache clean
+
       # vllm-openai server extras (match the official published image)
       uv pip install --no-cache -v \
         --index-strategy unsafe-best-match \
